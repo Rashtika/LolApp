@@ -8,8 +8,8 @@ namespace ConsoleApp1
 {
     internal interface IPlayerAction
     {
-        void TakeDamage(int damage);
-        void SpecialMove();
+        void TakeDamage(int damage, LOLPlayer opponent);
+        void SpecialMove(LOLPlayer opponent);
         void LevelUp();
         bool IsAlive();
 

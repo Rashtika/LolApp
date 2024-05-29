@@ -8,19 +8,41 @@ namespace ConsoleApp1
 {
     public abstract class LOLPlayer : IPlayerAction
     {
-        public string Name { get; set; }
+        public string UserName { get; set; }
         public int Health { get; set; }
         public int Score { get; set; }
         public int Level { get; set; }
-        public abstract void TakeDamage(int damage);
-        public abstract void SpecialMove();
+        public bool Alive { get; set; }
+        public abstract void TakeDamage(int damage, LOLPlayer opponent);
+        public abstract void SpecialMove(LOLPlayer opponent);
 
-        public LOLPlayer(string name)
+        public enum LolChampion {
+            lux,
+            darius,
+            teemo,
+            annie,
+
+        }
+        public LOLPlayer(string name, LolChampion c)
         {
-            Name = name;
+            UserName = name;
             Health = 2000;
             Score = 0;
             Level = 0;
+            switch (c)
+            {
+                case LolChampion.lux:
+                    LOLPlayer lolPlayer = new LuxPlayer(name);
+                    break;
+                case LolChampion.darius:
+                    LOLPlayer lolPlayer1 = new DariusPlayer(name);
+                    break;
+                case LolChampion.teemo:
+                    break;
+
+
+
+            }
         }
 
         public bool IsAlive()
@@ -39,11 +61,10 @@ namespace ConsoleApp1
         }
 
 
-
         public void LevelUp()
         {
             Level++;
-            Console.WriteLine($"{Name} has leveled up to level {Level}!");
+            Console.WriteLine($"{UserName} has leveled up to level {Level}!");
         }
     }
 }

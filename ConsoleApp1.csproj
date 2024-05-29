@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DariusPlayer.cs" />
     <Compile Include="IPlayerAction.cs" />
     <Compile Include="LOLPlayer.cs" />
     <Compile Include="LuxPlayer.cs" />

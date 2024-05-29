@@ -8,22 +8,26 @@ namespace ConsoleApp1
 {
     public class LuxPlayer : LOLPlayer
     {
-        override public void TakeDamage(int damage)
+        public LuxPlayer(string name) : base(name)
         {
-            Health -= damage;
-            if (Health < 0)
+        }
+
+        override public void TakeDamage(int damage, LOLPlayer opponent)
+        {
+            opponent.Health -= damage;
+            if (opponent.Health < 0)
             {
-                Health = 0;
-                 = false;
+                opponent.Health = 0;
+                Alive = false;
             }
         }
 
-        override public void SpecialMove()
+        override public void SpecialMove(LOLPlayer opponent)
         {
             if (base.HasSpecialMove())
             {
-                Console.WriteLine($"{Name} is using special move");
-                Health -= 1000;
+                Console.WriteLine($"{UserName} is using special move");
+                opponent.Health -= 1000;
             }
 
         }
