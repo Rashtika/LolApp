@@ -8,7 +8,7 @@ namespace ConsoleApp1
 {
     public class Champion
     {
-        private Inventory Inventory;
+        public Inventory Inventory;
         public string Name { set; get; }
         public Champion(string name)
         {

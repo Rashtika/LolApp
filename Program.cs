@@ -3,60 +3,97 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace ConsoleApp1
 {
     public class Program
     {
+        private static Dictionary<int, Type> itemTypeMap = new Dictionary<int, Type>();
+        private static Dictionary<int, Action<Champion>> actionMap = new Dictionary<int, Action<Champion>>();
+
         static void Main(string[] args)
         {
 
-            List<Champion> list = new List<Champion>();
+            //List<Champion> list = new List<Champion>();
             Champion championOne = new Champion("Bara");
-            Item itemOne = new SupermenoveGache();
-            Item itemTwo = new Shilterica();
-            Item itemThree = new BucketHelmet();
-            Item itemFour = new AmuletOfLost();
+
+            
+            actionMap[0] = EquipAction;
+            actionMap[1] = UnEquipAction;
+            actionMap[2] = PrintList;
+            
+            itemTypeMap[0] = typeof(SupermenoveGache);
+            itemTypeMap[1] = typeof(Shilterica);
+            itemTypeMap[2] = typeof(BucketHelmet);
+            itemTypeMap[3] = typeof(AmuletOfLost);
 
             bool quit = false;
-            Play();
+            
             while (!quit)
             {
-                string option = Console.ReadLine();
-                switch (int.Parse(option))
-                {
-                    case 0:
-                        Console.WriteLine($"Choose item:" +
-                $"press" +
-                $"0 - to add SupermenoveGache" +
-                $"1 - to add Shilterica" +
-                $"2 - to add BucketHelmet" +
-                $"3 - to add AmuletOfLost" +
-                $"4 - to print options");
-                        
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                }
+                quit = Menu(championOne);
             }
 
         }
-        public static void Play()
-        {
-            Console.WriteLine($"Available actions:" +
-                $"press" +
-                $"0 - to add new item of choice" +
-                $"1 - to remove an item of choice" +
-                $"2 - to print list of items" +
-                $"3 - to quit" +
-                $"4 - to print options");
 
+        private static void EquipAction(Champion champion)
+        {
+            Console.WriteLine($"Available items:\n" +
+                $"press\n" +
+                $"0 - SupermenoveGache\n" +
+                $"1 - Shilterica\n" +
+                $"2 - BucketHelmet\n" +
+                $"3 - AmuletOfLost");
+
+            string option = Console.ReadLine();
+
+            if (int.TryParse(option, out int result) && itemTypeMap.TryGetValue(result, out Type type))
+            {
+                Item item = (Item)Activator.CreateInstance(type);
+                champion.Equip(item);
+            }
+        }
+
+        private static void UnEquipAction(Champion champion)
+        {
+            Console.WriteLine($"Available items:\n" +
+                $"press\n");
+            Console.WriteLine(champion.Inventory.getDescription());
+
+            string option = Console.ReadLine();
+
+            if (int.TryParse(option, out int result))
+            {
+                champion.UnEquip(champion.Inventory.Items[result]);
+            }
+        }
+
+        public static bool Menu(Champion champion)
+        {
+            Console.WriteLine($"Available actions:\n" +
+                $"press\n" +
+                $"0 - to add new item of choice\n" +
+                $"1 - to remove an item of choice\n" +
+                $"2 - to print list of items\n" +
+                $"3 - to quit");
+
+            string option = Console.ReadLine();
+            if (int.TryParse(option, out int result))
+            {
+                if (actionMap.TryGetValue(result, out Action<Champion> action)) {
+                    action(champion);
+                } else if (result == 3)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static void PrintList(Champion champion)
+        {
+            Console.WriteLine(champion.Inventory.getDescription());
         }
 
     }

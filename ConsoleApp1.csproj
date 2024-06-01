@@ -43,12 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DariusPlayer.cs" />
-    <Compile Include="IPlayerAction.cs" />
-    <Compile Include="LOLPlayer.cs" />
-    <Compile Include="LuxPlayer.cs" />
+    <Compile Include="AmuletOfLost.cs" />
+    <Compile Include="BucketHelmet.cs" />
+    <Compile Include="Champion.cs" />
+    <Compile Include="IDescription.cs" />
+    <Compile Include="Inventory.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shilterica.cs" />
+    <Compile Include="SupermenoveGache.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
